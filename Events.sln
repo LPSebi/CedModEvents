@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinder", "Pathfinder\Pathfinder.csproj", "{8B641A4F-25F4-4CAC-A918-F9B124FAB924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeanutEscape", "PeanutEscape\PeanutEscape.csproj", "{2A70586F-ACEC-4DE8-93CD-683BFC7BA38F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B641A4F-25F4-4CAC-A918-F9B124FAB924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B641A4F-25F4-4CAC-A918-F9B124FAB924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B641A4F-25F4-4CAC-A918-F9B124FAB924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B641A4F-25F4-4CAC-A918-F9B124FAB924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A70586F-ACEC-4DE8-93CD-683BFC7BA38F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A70586F-ACEC-4DE8-93CD-683BFC7BA38F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A70586F-ACEC-4DE8-93CD-683BFC7BA38F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A70586F-ACEC-4DE8-93CD-683BFC7BA38F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
