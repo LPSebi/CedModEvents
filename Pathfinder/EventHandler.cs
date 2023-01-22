@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using Interactables.Interobjects;
 using Interactables.Interobjects.DoorUtils;
 using PlayerRoles;
 using MEC;
@@ -18,7 +19,7 @@ namespace Events.Pathfinder
             RoleTypeId.ChaosConscript,
             RoleTypeId.ChaosRepressor,
             RoleTypeId.ChaosRifleman};
-        private static bool hasWon = false;
+        private static bool _hasWon = false;
 
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
@@ -72,7 +73,7 @@ namespace Events.Pathfinder
                 
                 PluginAPI.Core.Server.RunCommand("/close **");
                 
-                hasWon = true;
+                _hasWon = true;
                 
                 PluginAPI.Core.Server.SendBroadcast($"<color=red>{player.Nickname}</color> hat dieses Event gewonnen!", 100, Broadcast.BroadcastFlags.Normal, true);
                 
@@ -87,12 +88,12 @@ namespace Events.Pathfinder
         {
             Log.Info("Started Coroutine");
             
-            if (hasWon) {Log.Info("Stopping DoorTimer Coroutine: hasWon = true"); yield break;}
+            if (_hasWon) {Log.Info("Stopping DoorTimer Coroutine: hasWon = true"); yield break;}
             while (true)
             { 
                 //lock all doors
                 //open all doors
-                foreach (var door in UnityEngine.Object.FindObjectsOfType<DoorVariant>()) {
+                foreach (var door in UnityEngine.Object.FindObjectsOfType<DoorVariant>().Where(x => !(x is ElevatorDoor))) {
                     door.NetworkTargetState = true; // opens the door
                     
                     door.ServerChangeLock(DoorLockReason.AdminCommand, true);
