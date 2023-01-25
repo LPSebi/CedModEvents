@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using CedMod.Addons.Events;
 using Interactables.Interobjects;
 using Interactables.Interobjects.DoorUtils;
 using PlayerRoles;
@@ -21,6 +22,10 @@ namespace Events.Pathfinder
             RoleTypeId.ChaosRifleman};
         private static bool _hasWon = false;
 
+        private static Pathfinder _pl;
+
+        public EventHandler(Pathfinder plugin) => _pl = plugin;
+        
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
@@ -46,16 +51,8 @@ namespace Events.Pathfinder
             foreach (var player in PluginAPI.Core.Player.GetPlayers())
             {
                 //set all players d class
-                if (player.Role != RoleTypeId.ClassD)
-                {
-                    Log.Info("Set role to Class D");
-                    player.SetRole(RoleTypeId.ClassD);
-                }
-                else
-                {
-                    Log.Info("Player is already Class D");
-                    
-                }
+                Log.Debug("Set role to Class D");
+                player.SetRole(RoleTypeId.ClassD);
             }
 
             doorCoroutine = Timing.RunCoroutine(DoorTimer());
@@ -75,7 +72,8 @@ namespace Events.Pathfinder
                 
                 _hasWon = true;
                 
-                PluginAPI.Core.Server.SendBroadcast($"<color=red>{player.Nickname}</color> hat dieses Event gewonnen!", 100, Broadcast.BroadcastFlags.Normal, true);
+                PluginAPI.Core.Server.SendBroadcast(string.Format(_pl.EventConfig.WinText, player.Nickname), 100, Broadcast.BroadcastFlags.Normal, true);
+                
                 
                 
                 
@@ -86,9 +84,9 @@ namespace Events.Pathfinder
 
         private static IEnumerator<float> DoorTimer()
         {
-            Log.Info("Started Coroutine");
+            Log.Debug("Started Coroutine");
             
-            if (_hasWon) {Log.Info("Stopping DoorTimer Coroutine: hasWon = true"); yield break;}
+            if (_hasWon) {Log.Debug("Stopping DoorTimer Coroutine: hasWon = true"); yield break;}
             while (true)
             { 
                 //lock all doors

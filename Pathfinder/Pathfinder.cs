@@ -7,8 +7,6 @@ namespace Events.Pathfinder
 {
     public class Pathfinder : IEvent
     {
-        
-        public static bool IsRunning = false;
         public static Pathfinder Singleton { get; private set; }
 
         [PluginUnload]
@@ -19,6 +17,7 @@ namespace Events.Pathfinder
 
         [PluginConfig] 
         public Config EventConfig;
+        
         
         [PluginEntryPoint("Pathfinder Event", "0.1.0", "Alle spawnen als D-Class. Alle Türen werden geöffnet. Der erste der den Ausgang erreicht gewinnt.", "fl0w#1957")]
         public void OnEnabled()
@@ -43,14 +42,13 @@ namespace Events.Pathfinder
         public void PrepareEvent()
         {
             Log.Info("Pathfinder Event is preparing");
-            IsRunning = true;
             Log.Info("Pathfinder Event is prepared");
             EventManager.RegisterEvents<EventHandler>(this);
         }
 
         public void StopEvent()
         {
-            IsRunning = false;
+            Singleton = null;
             EventManager.UnregisterEvents<EventHandler>(this);
         }
     }
