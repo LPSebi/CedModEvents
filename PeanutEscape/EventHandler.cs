@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// // -----------------------------------------------------------------------
+// // <copyright file="EventHandler.cs" company="fl0w">
+// // Copyright (c) fl0w#1957 (https://fl0w.dev). All rights reserved.
+// // Licensed under the CC BY-SA 3.0 license.
+// // </copyright>
+// // -----------------------------------------------------------------------
+using System.Collections.Generic;
 using MEC;
 using PlayerRoles;
 using PlayerStatsSystem;
