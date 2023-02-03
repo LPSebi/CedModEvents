@@ -14,7 +14,8 @@ namespace Events.TDM
     {
         [Description("The text displayed when a user wins the event")]
         public string WinText { get; set; } = "<color=red>{0}</color> hat dieses Event gewonnen!";
-        [Description("Is the event enabled?")]
-        public bool IsEnabled { get; set; }
+
+        [Description("Is the event enabled?")] 
+        public bool IsEnabled { get; set; } = true;
     }
 }

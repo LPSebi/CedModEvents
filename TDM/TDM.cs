@@ -14,22 +14,22 @@ namespace Events.TDM
         public static TDM Singleton { get; private set; }
 
 
-        public string EventName { get; } = "PeanutEscape Event";
+        public string EventName { get; } = "TDM Event";
         public string EvenAuthor { get; } = "fl0w#1957";
 
         public string EventDescription { get; set; } =
             "50 % of the players are D-Class and the other 50 % are Scientists. They have to kill each other. The last team standing wins.";
 
-        public string EventPrefix { get; } = "pe";
+        public string EventPrefix { get; } = "tdm";
         public bool BulletHolesAllowed { get; set; } = true;
         public IEventConfig Config => EventConfig;
 
 
         public void PrepareEvent()
         {
-            Log.Info("PeanutEscape Event is preparing");
+            Log.Info("TDM Event is preparing");
             Singleton = this;
-            Log.Info("PeanutEscape Event is prepared");
+            Log.Info("TDM Event is prepared");
             EventManager.RegisterEvents<EventHandler>(this);
         }
 
@@ -45,7 +45,7 @@ namespace Events.TDM
             StopEvent();
         }
 
-        [PluginEntryPoint("PeanutEscape Event", "0.1.0",
+        [PluginEntryPoint("TDM Event", "0.1.0",
             "50 % of the players are D-Class and the other 50 % are Scientists. They have to kill each other. The last team standing wins.",
             "fl0w#1957")]
         public void OnEnabled()
