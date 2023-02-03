@@ -4,11 +4,11 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{8B641A4F-25F4-4CAC-A918-F9B124FAB924}</ProjectGuid>
+        <ProjectGuid>{821676DE-A0F3-4DEF-8286-E58703DC0B09}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Pathfinder</RootNamespace>
-        <AssemblyName>Pathfinder</AssemblyName>
+        <RootNamespace>TDM</RootNamespace>
+        <AssemblyName>TDM</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
     </PropertyGroup>
@@ -33,16 +33,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-          <HintPath>$(csRefsSCPSL)\scpslgamenew\Assembly-CSharp.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
-          <HintPath>$(csRefsSCPSL)\scpslgamenew\Assembly-CSharp-firstpass.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
         <Reference Include="CedModV3">
-          <HintPath>$(csRefsSCPSL)\CedMod\CedModV3.dll</HintPath>
-        </Reference>
-        <Reference Include="Mirror">
-          <HintPath>$(csRefsSCPSL)\scpslgamenew\ALLSERVERDLLS\Mirror.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\nwapiReferences\CedModV3.dll</HintPath>
         </Reference>
         <Reference Include="PluginAPI, Version=12.0.0.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>..\packages\Northwood.PluginAPI.12.0.0\lib\net48\PluginAPI.dll</HintPath>
@@ -51,21 +48,23 @@
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
-        <Reference Include="UnityEngine.CoreModule">
-          <HintPath>$(csRefsSCPSL)\scpslgamenew\ALLSERVERDLLS\UnityEngine.CoreModule.dll</HintPath>
+        <Reference Include="UnityEngine">
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\UnityEngine.dll</HintPath>
         </Reference>
-        <Reference Include="YamlDotNet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-          <HintPath>..\packages\YamlDotNet.12.3.1\lib\net47\YamlDotNet.dll</HintPath>
+        <Reference Include="UnityEngine.CoreModule">
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="YamlDotNet, Version=11.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+          <HintPath>..\packages\YamlDotNet.11.0.1\lib\net45\YamlDotNet.dll</HintPath>
         </Reference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Config.cs" />
         <Compile Include="EventHandler.cs" />
-        <Compile Include="Pathfinder.cs" />
+        <Compile Include="TDM.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-      <None Include="App.config" />
       <None Include="packages.config" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

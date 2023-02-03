@@ -1,21 +1,15 @@
-﻿// // -----------------------------------------------------------------------
-// // <copyright file="PeanutEscape.cs" company="fl0w">
-// // Copyright (c) fl0w#1957 (https://fl0w.dev). All rights reserved.
-// // Licensed under the CC BY-SA 3.0 license.
-// // </copyright>
-// // -----------------------------------------------------------------------
+﻿using CedMod;
 using CedMod.Addons.Events;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using EventManager = PluginAPI.Events.EventManager;
 
-namespace Events.PeanutEscape
+namespace Events.TDM
 {
-    public class PeanutEscape : IEvent
+    public class TDM: IEvent
     {
         
-        public static bool IsRunning = false;
-        public static PeanutEscape Singleton { get; private set; }
+        public static TDM Singleton { get; private set; }
 
         [PluginUnload]
         public void OnDisabled()
@@ -27,7 +21,7 @@ namespace Events.PeanutEscape
         public Config EventConfig;
         
         [PluginEntryPoint("PeanutEscape Event", "0.1.0",
-            "Locked in the Light Containment, one player becomes Peanut and all other D-boi. Every D-boi that dies becomes Peanut. The last D-Class person wins.", "fl0w#1957")]
+            "50 % of the players are D-Class and the other 50 % are Scientists. They have to kill each other. The last team standing wins.", "fl0w#1957")]
         public void OnEnabled()
         {
             Singleton = this;
@@ -41,7 +35,7 @@ namespace Events.PeanutEscape
         public string EvenAuthor { get; } = "fl0w#1957";
 
         public string EventDescription { get; set; } =
-            "Locked in the Light Containment, one player becomes Peanut and all other D-boi. Every D-boi that dies becomes Peanut. The last D-Class person wins.";
+            "50 % of the players are D-Class and the other 50 % are Scientists. They have to kill each other. The last team standing wins.";
         public string EventPrefix { get; } = "pe";
         public bool BulletHolesAllowed { get; set; } = true;
         public IEventConfig Config => EventConfig;
@@ -50,15 +44,16 @@ namespace Events.PeanutEscape
         public void PrepareEvent()
         {
             Log.Info("PeanutEscape Event is preparing");
-            IsRunning = true;
+            Singleton = this;
             Log.Info("PeanutEscape Event is prepared");
             EventManager.RegisterEvents<EventHandler>(this);
         }
 
         public void StopEvent()
         {
-            IsRunning = false;
+            Singleton = null;
             EventManager.UnregisterEvents<EventHandler>(this);
         }
+        
     }
 }

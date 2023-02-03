@@ -5,6 +5,7 @@
 // // </copyright>
 // // -----------------------------------------------------------------------
 using System.Collections.Generic;
+using LightContainmentZoneDecontamination;
 using MEC;
 using PlayerRoles;
 using PlayerStatsSystem;
@@ -28,29 +29,29 @@ namespace Events.PeanutEscape
         public static List<string> checkpoints = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B"};
         static Random rnd = new Random();
         
+        private static PeanutEscape _pl;
+
+        public EventHandler(PeanutEscape plugin)
+        {
+            _pl = plugin;
+        }
+        
         
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
-            
-            //check if 3 or more players are in the server
-            //if (PluginAPI.Core.Player.GetPlayers().Count < 3)
-            //{
-            //    Log.Info("Not enough players to start the event");
-            //    PluginAPI.Core.Round.End();
-            //    return;
-            //}
-            
+
             //disable LCZ decontamination
-            PluginAPI.Core.Server.RunCommand("/DECONTAMINATION DISABLE");
+            DecontaminationController.Singleton.DecontaminationOverride =
+                DecontaminationController.DecontaminationStatus.Disabled;
             
             //disable all checkpoints
             foreach (var checkpoint in checkpoints)
             {
                 PluginAPI.Core.Server.RunCommand("/lock " + checkpoint);
             }
-            
+
 
             //disable FF
             PluginAPI.Core.Server.FriendlyFire = false;
@@ -72,7 +73,7 @@ namespace Events.PeanutEscape
                     //set player role
                     player.SetRole(RoleTypeId.Scp173);
                     player.SendBroadcast(
-                        "Du bist <color=red>SCP-173</color>. Jede Person, die du tötest wird auch zu <color=red>SCP-173</color> hat vollen schild jedoch nur 1 HP. Vernichte sie alle!",
+                        _pl.EventConfig.PeanutText,
                         30,
                         Broadcast.BroadcastFlags.Normal,
                         true);
@@ -82,7 +83,7 @@ namespace Events.PeanutEscape
                     //set player role
                     player.SetRole(RoleTypeId.ClassD);
                     player.SendBroadcast(
-                        "Du bist <color=red>Class D</color>. Versuch als längstes zu überleben. SCP-173 kommt!",
+                        _pl.EventConfig.DClassText,
                         30,
                         Broadcast.BroadcastFlags.Normal,
                         true);
@@ -123,7 +124,7 @@ namespace Events.PeanutEscape
                             //set player role
                             _players[player].Position = new Vector3(29.56641f, 991.885f, -25.23828f);
                             PluginAPI.Core.Server.SendBroadcast(
-                                $"<color=red>{_players[player].Nickname}</color> hat dieses Event gewonnen!",
+                                string.Format(_pl.EventConfig.WinText, _players[player].Nickname),
                                 30, 
                                 Broadcast.BroadcastFlags.Normal, 
                                 true);
