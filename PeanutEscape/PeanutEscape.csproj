@@ -33,16 +33,16 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="Assembly-CSharp">
-          <HintPath>$(csRefsSCPSL)\nwapiReferences\Assembly-CSharp.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\Assembly-CSharp.dll</HintPath>
         </Reference>
         <Reference Include="Assembly-CSharp-firstpass">
-          <HintPath>$(csRefsSCPSL)\nwapiReferences\Assembly-CSharp-firstpass.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\Assembly-CSharp-firstpass.dll</HintPath>
         </Reference>
         <Reference Include="CedModV3">
-          <HintPath>$(csRefsSCPSL)\nwapiReferences\CedModV3.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\CedMod\CedModV3.dll</HintPath>
         </Reference>
         <Reference Include="Mirror">
-          <HintPath>$(csRefsSCPSL)\scpslgamenew\ALLSERVERDLLS\Mirror.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\Mirror.dll</HintPath>
         </Reference>
         <Reference Include="PluginAPI, Version=12.0.0.0, Culture=neutral, processorArchitecture=Amd64">
           <HintPath>..\packages\Northwood.PluginAPI.12.0.0\lib\net48\PluginAPI.dll</HintPath>
@@ -51,8 +51,11 @@
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
+        <Reference Include="UnityEngine">
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\UnityEngine.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.CoreModule">
-          <HintPath>$(csRefsSCPSL)\nwapiReferences\UnityEngine.CoreModule.dll</HintPath>
+          <HintPath>F:\CODESTUFF\csReferences\scpslgamenew\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="YamlDotNet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
           <HintPath>..\packages\YamlDotNet.12.3.1\lib\net47\YamlDotNet.dll</HintPath>
