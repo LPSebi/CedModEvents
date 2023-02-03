@@ -20,8 +20,6 @@ namespace Events.TDM
     public class EventHandler
     {
 
-        private static bool _hasWon;
-
         private static TDM _pl;
 
         public EventHandler(TDM plugin)
@@ -44,16 +42,16 @@ namespace Events.TDM
             //enable round lock
             if (!Round.IsLocked) Round.IsLocked = true;
 
-            List<Player> player_list = Player.GetPlayers();
-            for (int i = 0; i < player_list.Count; i++)
+            List<Player> playerList = Player.GetPlayers();
+            for (int i = 0; i < playerList.Count; i++)
             {
                 if (i % 2 == 0)
                 {
-                    player_list[i].Role = RoleTypeId.Scientist;
+                    playerList[i].Role = RoleTypeId.Scientist;
                 }
                 else
                 {
-                    player_list[i].Role = RoleTypeId.ClassD;
+                    playerList[i].Role = RoleTypeId.ClassD;
                 }
             }
         }
