@@ -128,7 +128,7 @@ namespace Events.PeanutEscape
                                 30, 
                                 Broadcast.BroadcastFlags.Normal, 
                                 true);
-                            PluginAPI.Core.Server.RunCommand("/SERVER_EVENT DETONATION_INSTANT");
+                            DecontaminationController.Singleton.ForceDecontamination();
                             Timing.RunCoroutine(tploop(_players[player]));
                             hasWon = true;
                             

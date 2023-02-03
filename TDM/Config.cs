@@ -5,16 +5,16 @@
 // // </copyright>
 // // -----------------------------------------------------------------------
 
+using System.ComponentModel;
 using CedMod.Addons.Events;
 
 namespace Events.TDM
 {
-    public class Config: IEventConfig
+    public class Config : IEventConfig
     {
-        public bool IsEnabled { get; set; }
-        
+        [Description("The text displayed when a user wins the event")]
         public string WinText { get; set; } = "<color=red>{0}</color> hat dieses Event gewonnen!";
-
-        
+        [Description("Is the event enabled?")]
+        public bool IsEnabled { get; set; }
     }
 }
