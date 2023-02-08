@@ -14,6 +14,9 @@ namespace Events.TDM
     {
         [Description("The text displayed when a user wins the event")]
         public string WinText { get; set; } = "<color=red>{0}</color> hat dieses Event gewonnen!";
+        
+        [Description("The amount of health the player spawns with")]
+        public int SpawnHealth { get; set; } = 200;
 
         [Description("Is the event enabled?")] 
         public bool IsEnabled { get; set; } = true;

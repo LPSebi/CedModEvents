@@ -45,14 +45,27 @@ namespace Events.TDM
             List<Player> playerList = Player.GetPlayers();
             for (int i = 0; i < playerList.Count; i++)
             {
+                //set role to scientist or classD
                 if (i % 2 == 0)
                 {
                     playerList[i].Role = RoleTypeId.Scientist;
+                    playerList[i].ClearInventory();
+                    //give scientist a weapon and ammo (GunE11SR)
+                    playerList[i].AddItem(ItemType.GunE11SR);
+                    playerList[i].AddItem(ItemType.Ammo556x45);
                 }
                 else
                 {
                     playerList[i].Role = RoleTypeId.ClassD;
+                    playerList[i].ClearInventory();
+                    //give scientist a weapon and ammo (AK)
+                    playerList[i].AddItem(ItemType.GunAK);
+                    playerList[i].AddItem(ItemType.Ammo762x39);
                 }
+                
+                //clear inventory
+                playerList[i].Health = _pl.EventConfig.SpawnHealth;
+                
             }
         }
 
