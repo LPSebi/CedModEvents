@@ -31,7 +31,7 @@ namespace Events.Pathfinder
             RoleTypeId.ChaosRifleman
         };
 
-        private static bool _hasWon;
+        private static bool _hasWon = false;
 
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
@@ -62,28 +62,24 @@ namespace Events.Pathfinder
             doorCoroutine = Timing.RunCoroutine(DoorTimer());
         }
 
-        [PluginEvent(ServerEventType.PlayerChangeRole)]
-        public void OnPlayerChangeRole(Player player, PlayerRoleBase roleBase, RoleTypeId newRole,
-            RoleChangeReason reason)
+        [PluginEvent(ServerEventType.PlayerEscape)]
+        public void OnPlayerChangeRole(Player player, RoleTypeId newRole)
         {
             //check if winner has been decided
-            
-            if (chaosList.Contains(newRole))
+            Timing.KillCoroutines(doorCoroutine);
+
+            //Server.RunCommand("/close **");
+            foreach (var door in Object.FindObjectsOfType<DoorVariant>())
             {
-                Timing.KillCoroutines(doorCoroutine);
-
-                Server.RunCommand("/close **");
-                foreach (var door in Object.FindObjectsOfType<DoorVariant>())
-                {
-                    // close the door
-                    door.NetworkTargetState = false; 
-                }
-
-                _hasWon = true;
-
-                Server.SendBroadcast(string.Format(Pathfinder.Singleton.EventConfig.WinText, player.Nickname), 100,
-                    Broadcast.BroadcastFlags.Normal, true);
+                // close the door
+                door.NetworkTargetState = false; 
             }
+
+            _hasWon = true;
+
+            Server.SendBroadcast(string.Format(Pathfinder.Singleton.EventConfig.WinText, player.Nickname), 100,
+                Broadcast.BroadcastFlags.Normal, true);
+            
         }
 
         private static IEnumerator<float> DoorTimer()

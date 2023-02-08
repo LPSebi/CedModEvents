@@ -15,6 +15,6 @@ namespace Events.Pathfinder
         public bool IsEnabled { get; set; } = true;
 
         [Description("The text displayer when a player has won the event")]
-        public string WinText { get; set; } = $"<color=red>{0}</color> hat dieses Event gewonnen!";
+        public string WinText { get; set; } = "<b><color=red>{0}</color> hat dieses Event gewonnen!</b>";
     }
 }
