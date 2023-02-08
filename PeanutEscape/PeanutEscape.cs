@@ -14,28 +14,15 @@ namespace Events.PeanutEscape
     public class PeanutEscape : IEvent
     {
         
-        public static bool IsRunning = false;
         public static PeanutEscape Singleton { get; private set; }
+        public EventHandler Handler;
 
-        [PluginUnload]
-        public void OnDisabled()
-        {
-            StopEvent();
-        }
 
         [PluginConfig] 
         public Config EventConfig;
         
-        [PluginEntryPoint("PeanutEscape Event", "0.1.0",
-            "Locked in the Light Containment, one player becomes Peanut and all other D-boi. Every D-boi that dies becomes Peanut. The last D-Class person wins.", "fl0w#1957")]
-        public void OnEnabled()
-        {
-            Singleton = this;
-            Handler = PluginHandler.Get(this);
-        }
-        public PluginHandler Handler;
-        
-        
+
+
 
         public string EventName { get; } = "PeanutEscape Event";
         public string EvenAuthor { get; } = "fl0w#1957";
@@ -50,15 +37,29 @@ namespace Events.PeanutEscape
         public void PrepareEvent()
         {
             Log.Info("PeanutEscape Event is preparing");
-            IsRunning = true;
+            Singleton = this;
             Log.Info("PeanutEscape Event is prepared");
-            EventManager.RegisterEvents<EventHandler>(this);
+            EventManager.RegisterEvents(this, Handler);
         }
 
         public void StopEvent()
         {
-            IsRunning = false;
-            EventManager.UnregisterEvents<EventHandler>(this);
+            Singleton = null;
+            EventManager.UnregisterEvents(this, Handler);
+        }
+
+        [PluginUnload]
+        public void OnDisabled()
+        {
+            StopEvent();
+        }
+        
+        [PluginEntryPoint("PeanutEscape Event", "0.1.0",
+            "Locked in the Light Containment, one player becomes Peanut and all other D-boi. Every D-boi that dies becomes Peanut. The last D-Class person wins.", "fl0w#1957")]
+        public void OnEnabled()
+        {
+            Singleton = this;
+            Handler = new EventHandler();
         }
     }
 }

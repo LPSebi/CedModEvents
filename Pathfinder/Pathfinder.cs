@@ -15,7 +15,7 @@ namespace Events.Pathfinder
     {
         [PluginConfig] public Config EventConfig;
 
-        public PluginHandler Handler;
+        public EventHandler Handler;
         public static Pathfinder Singleton { get; set; }
 
 
@@ -34,13 +34,13 @@ namespace Events.Pathfinder
         {
             Log.Info("Pathfinder Event by fl0w#1957 is preparing");
             Log.Info("Pathfinder Event by fl0w#1957 is prepared ");
-            EventManager.RegisterEvents<EventHandler>(this);
+            EventManager.RegisterEvents(this, Handler);
         }
 
         public void StopEvent()
         {
             Singleton = null;
-            EventManager.UnregisterEvents<EventHandler>(this);
+            EventManager.UnregisterEvents(this, Handler);
         }
 
         [PluginUnload]
@@ -54,7 +54,7 @@ namespace Events.Pathfinder
         public void OnEnabled()
         {
             Singleton = this;
-            Handler = PluginHandler.Get(this);
+            Handler = new EventHandler();
         }
     }
 }

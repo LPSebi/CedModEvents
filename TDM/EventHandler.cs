@@ -19,17 +19,30 @@ namespace Events.TDM
 {
     public class EventHandler
     {
+        
+        public static List<string> checkpoints = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B"};
 
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
             //disable LCZ decontamination
+            /*
             DecontaminationController.Singleton.DecontaminationOverride =
                 DecontaminationController.DecontaminationStatus.Disabled;
+            */
+            //temporary fix because the upper isn't working
+            Server.RunCommand("/DECONTAMINATION DISABLE");
+            
 
             //disable FF
             Server.FriendlyFire = false;
+            
+            //lock all checkpoint doors
+            foreach (var checkpoint in checkpoints)
+            {
+                PluginAPI.Core.Server.RunCommand("/lock " + checkpoint);
+            }
 
 
             //enable round lock

@@ -9,7 +9,7 @@ namespace Events.TDM
     {
         [PluginConfig] public Config EventConfig;
 
-        public PluginHandler Handler;
+        public EventHandler Handler;
 
         public static TDM Singleton { get; private set; }
 
@@ -30,13 +30,13 @@ namespace Events.TDM
             Log.Info("TDM Event is preparing");
             Singleton = this;
             Log.Info("TDM Event is prepared");
-            EventManager.RegisterEvents<EventHandler>(this);
+            EventManager.RegisterEvents(this, Handler);
         }
 
         public void StopEvent()
         {
             Singleton = null;
-            EventManager.UnregisterEvents<EventHandler>(this);
+            EventManager.UnregisterEvents(this, Handler);
         }
 
         [PluginUnload]
@@ -51,7 +51,7 @@ namespace Events.TDM
         public void OnEnabled()
         {
             Singleton = this;
-            Handler = PluginHandler.Get(this);
+            Handler = new EventHandler();
         }
     }
 }
