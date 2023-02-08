@@ -58,7 +58,7 @@ namespace Events.TDM
                     playerList[i].ClearInventory();
                     //give scientist a weapon and ammo (GunE11SR)
                     playerList[i].AddItem(ItemType.GunE11SR);
-                    playerList[i].AddItem(ItemType.Ammo556x45);
+                    playerList[i].SetAmmo(ItemType.Ammo556x45, 200);
                 }
                 else
                 {
@@ -67,6 +67,7 @@ namespace Events.TDM
                     //give scientist a weapon and ammo (AK)
                     playerList[i].AddItem(ItemType.GunAK);
                     playerList[i].AddItem(ItemType.Ammo762x39);
+                    playerList[i].SetAmmo(ItemType.Ammo762x39, 200);
                 }
                 
                 //clear inventory
@@ -87,13 +88,15 @@ namespace Events.TDM
                 //get the last player
                 Player lastPlayer = player_list.First(x => x.Role == RoleTypeId.ClassD);
                 //announce the winner
+                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, lastPlayer.Nickname), 100,
+                    Broadcast.BroadcastFlags.Normal, true);
             }
             else if (player_list.Count(x => x.Role == RoleTypeId.Scientist) == 1)
             {
                 //get the last player
                 Player lastPlayer = player_list.First(x => x.Role == RoleTypeId.Scientist);
                 //announce the winner
-                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, player.Nickname), 100,
+                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, lastPlayer.Nickname), 100,
                     Broadcast.BroadcastFlags.Normal, true);
 
             }
