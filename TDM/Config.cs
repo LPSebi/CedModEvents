@@ -13,7 +13,7 @@ namespace Events.TDM
     public class Config : IEventConfig
     {
         [Description("The text displayed when a user wins the event")]
-        public string WinText { get; set; } = "<color=red>{0}</color> hat dieses Event gewonnen!";
+        public string WinText { get; set; } = "<color=red>{0}</color> haben dieses Event gewonnen!";
         
         [Description("The amount of health the player spawns with")]
         public int SpawnHealth { get; set; } = 200;

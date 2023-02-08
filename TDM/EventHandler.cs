@@ -82,32 +82,31 @@ namespace Events.TDM
             if (attacker == null) return;
             if (player == null) return;
             List<Player> player_list = Player.GetPlayers();
-            //check if only 1 player is left of any team
-            if (player_list.Count(x => x.Role == RoleTypeId.ClassD) == 1)
+            List<RoleTypeId> classd_roles = new List<RoleTypeId> {RoleTypeId.ClassD, RoleTypeId.Spectator, RoleTypeId.None, RoleTypeId.CustomRole, RoleTypeId.Overwatch, RoleTypeId.Tutorial};
+            List<RoleTypeId> scientist_roles = new List<RoleTypeId> {RoleTypeId.Scientist, RoleTypeId.Spectator, RoleTypeId.None, RoleTypeId.CustomRole, RoleTypeId.Overwatch, RoleTypeId.Tutorial};
+            //check if one team is dead
+            if (player_list.All(p => classd_roles.Contains(p.Role)))
             {
-                //get the last player
-                Player lastPlayer = player_list.First(x => x.Role == RoleTypeId.ClassD);
-                //announce the winner
-                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, lastPlayer.Nickname), 100,
+                Log.Info("classD win");
+                //scientists win
+                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, "Class-D's"), 100,
                     Broadcast.BroadcastFlags.Normal, true);
             }
-            else if (player_list.Count(x => x.Role == RoleTypeId.Scientist) == 1)
+            else if (player_list.All(p => scientist_roles.Contains(p.Role)))
             {
-                //get the last player
-                Player lastPlayer = player_list.First(x => x.Role == RoleTypeId.Scientist);
-                //announce the winner
-                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, lastPlayer.Nickname), 100,
+                Log.Info("scientist win");
+                //classD win
+                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, "Scientist's"), 100,
                     Broadcast.BroadcastFlags.Normal, true);
+            }
+            else
+            {
+                
+                Log.Info("no one won yet");
+                //no one won yet
+                
+            }
 
-            }
-            else if (player_list.Count(x => x.Role == RoleTypeId.ClassD) == 0)
-            {
-                //announce the winner
-            }
-            else if (player_list.Count(x => x.Role == RoleTypeId.Scientist) == 0)
-            {
-                //announce the winner
-            }
         }
     }
 }
