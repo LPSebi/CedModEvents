@@ -28,15 +28,8 @@ namespace Events.PeanutEscape
         public static bool initial_spawned = false;
         public static List<string> checkpoints = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B"};
         static Random rnd = new Random();
-        
-        private static PeanutEscape _pl;
 
-        public EventHandler(PeanutEscape plugin)
-        {
-            _pl = plugin;
-        }
-        
-        
+
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
@@ -73,7 +66,7 @@ namespace Events.PeanutEscape
                     //set player role
                     player.SetRole(RoleTypeId.Scp173);
                     player.SendBroadcast(
-                        _pl.EventConfig.PeanutText,
+                        PeanutEscape.Singleton.EventConfig.PeanutText,
                         30,
                         Broadcast.BroadcastFlags.Normal,
                         true);
@@ -83,7 +76,7 @@ namespace Events.PeanutEscape
                     //set player role
                     player.SetRole(RoleTypeId.ClassD);
                     player.SendBroadcast(
-                        _pl.EventConfig.DClassText,
+                        PeanutEscape.Singleton.EventConfig.DClassText,
                         30,
                         Broadcast.BroadcastFlags.Normal,
                         true);
@@ -124,7 +117,7 @@ namespace Events.PeanutEscape
                             //set player role
                             _players[player].Position = new Vector3(29.56641f, 991.885f, -25.23828f);
                             PluginAPI.Core.Server.SendBroadcast(
-                                string.Format(_pl.EventConfig.WinText, _players[player].Nickname),
+                                string.Format(PeanutEscape.Singleton.EventConfig.WinText, _players[player].Nickname),
                                 30, 
                                 Broadcast.BroadcastFlags.Normal, 
                                 true);

@@ -20,13 +20,6 @@ namespace Events.TDM
     public class EventHandler
     {
 
-        private static TDM _pl;
-
-        public EventHandler(TDM plugin)
-        {
-            _pl = plugin;
-        }
-
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
@@ -64,7 +57,7 @@ namespace Events.TDM
                 }
                 
                 //clear inventory
-                playerList[i].Health = _pl.EventConfig.SpawnHealth;
+                playerList[i].Health = TDM.Singleton.EventConfig.SpawnHealth;
                 
             }
         }
@@ -87,7 +80,7 @@ namespace Events.TDM
                 //get the last player
                 Player lastPlayer = player_list.First(x => x.Role == RoleTypeId.Scientist);
                 //announce the winner
-                Server.SendBroadcast(string.Format(_pl.EventConfig.WinText, player.Nickname), 100,
+                Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, player.Nickname), 100,
                     Broadcast.BroadcastFlags.Normal, true);
 
             }

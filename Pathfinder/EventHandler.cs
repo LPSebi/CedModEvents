@@ -33,13 +33,6 @@ namespace Events.Pathfinder
 
         private static bool _hasWon;
 
-        private static Pathfinder _pl;
-
-        public EventHandler(Pathfinder plugin)
-        {
-            _pl = plugin;
-        }
-
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
@@ -88,7 +81,7 @@ namespace Events.Pathfinder
 
                 _hasWon = true;
 
-                Server.SendBroadcast(string.Format(_pl.EventConfig.WinText, player.Nickname), 100,
+                Server.SendBroadcast(string.Format(Pathfinder.Singleton.EventConfig.WinText, player.Nickname), 100,
                     Broadcast.BroadcastFlags.Normal, true);
             }
         }
