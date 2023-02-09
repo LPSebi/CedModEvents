@@ -27,14 +27,8 @@ namespace Events.TDM
         public void OnRoundStart()
         {
             //disable LCZ decontamination
-            /*
-            DecontaminationController.Singleton.DecontaminationOverride =
-                DecontaminationController.DecontaminationStatus.Disabled;
-            */
-            //temporary fix because the upper isn't working
-            Server.RunCommand("/DECONTAMINATION DISABLE");
+            DecontaminationController.Singleton.NetworkDecontaminationOverride = DecontaminationController.DecontaminationStatus.Disabled;
             
-
             //disable FF
             Server.FriendlyFire = false;
             

@@ -36,8 +36,7 @@ namespace Events.PeanutEscape
         {
 
             //disable LCZ decontamination
-            DecontaminationController.Singleton.DecontaminationOverride =
-                DecontaminationController.DecontaminationStatus.Disabled;
+            DecontaminationController.Singleton.NetworkDecontaminationOverride = DecontaminationController.DecontaminationStatus.Disabled;
             
             //disable all checkpoints
             foreach (var checkpoint in checkpoints)
