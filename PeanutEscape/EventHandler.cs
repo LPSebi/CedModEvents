@@ -5,6 +5,8 @@
 // // </copyright>
 // // -----------------------------------------------------------------------
 using System.Collections.Generic;
+using System.Linq;
+using Interactables.Interobjects.DoorUtils;
 using LightContainmentZoneDecontamination;
 using MEC;
 using PlayerRoles;
@@ -26,7 +28,7 @@ namespace Events.PeanutEscape
         private static bool hasWon = false;
         public static int dclasscount = 0;
         public static bool initial_spawned = false;
-        public static List<string> checkpoints = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B"};
+        public static List<string> lockList = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B", "LCZ_ARMORY", "LCZ_WC", "914", "330", "173_ARMORY"};
         static Random rnd = new Random();
 
 
@@ -38,12 +40,14 @@ namespace Events.PeanutEscape
             //disable LCZ decontamination
             DecontaminationController.Singleton.NetworkDecontaminationOverride = DecontaminationController.DecontaminationStatus.Disabled;
             
-            //disable all checkpoints
-            foreach (var checkpoint in checkpoints)
+            
+            
+            //lock all doors in lockList
+            foreach (var door in lockList)
             {
-                PluginAPI.Core.Server.RunCommand("/lock " + checkpoint);
+                PluginAPI.Core.Server.RunCommand("/lock " + door);
             }
-
+            
 
             //disable FF
             PluginAPI.Core.Server.FriendlyFire = false;
@@ -120,9 +124,10 @@ namespace Events.PeanutEscape
                                 30, 
                                 Broadcast.BroadcastFlags.Normal, 
                                 true);
-                            DecontaminationController.Singleton.ForceDecontamination();
                             Timing.RunCoroutine(tploop(_players[player]));
                             hasWon = true;
+                            //set warhead to 10 seconds
+                            PluginAPI.Core.Warhead.DetonationTime = 10f;
                             
                         }
                     }
@@ -172,7 +177,7 @@ namespace Events.PeanutEscape
            
            player.SetRole(RoleTypeId.Scp173);
            player.Health = 1;
-           player.SendBroadcast( "Du bist jetzt <color=red>SCP-173</color>. Jede Person, die du tötest wird auch zu <color=red>SCP-173</color> hat vollen schild jedoch nur 1 HP.", 30, Broadcast.BroadcastFlags.Normal, true);
+           player.SendBroadcast( PeanutEscape.Singleton.EventConfig.PeanutText, 30, Broadcast.BroadcastFlags.Normal, true);
             
         }
 
