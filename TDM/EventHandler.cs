@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using InventorySystem.Items.Firearms;
 using LightContainmentZoneDecontamination;
 using MEC;
 using PlayerRoles;
@@ -51,7 +52,8 @@ namespace Events.TDM
                     playerList[i].Role = RoleTypeId.Scientist;
                     playerList[i].ClearInventory();
                     //give scientist a weapon and ammo (GunE11SR)
-                    playerList[i].AddItem(ItemType.GunE11SR);
+                    Firearm firearm = (Firearm)playerList[i].AddItem(ItemType.GunE11SR);
+                    //firearm.Status = new FirearmStatus(30, FirearmStatusFlags.MagazineInserted, );
                     playerList[i].SetAmmo(ItemType.Ammo556x45, 200);
                 }
                 else
@@ -60,7 +62,8 @@ namespace Events.TDM
                     playerList[i].ClearInventory();
                     //give scientist a weapon and ammo (AK)
                     playerList[i].AddItem(ItemType.GunAK);
-                    playerList[i].AddItem(ItemType.Ammo762x39);
+                    Firearm firearm = (Firearm)playerList[i].AddItem(ItemType.Ammo762x39);
+                    //firearm.Status = new FirearmStatus(30, FirearmStatusFlags.MagazineInserted, AttachmentParams);
                     playerList[i].SetAmmo(ItemType.Ammo762x39, 200);
                 }
                 
