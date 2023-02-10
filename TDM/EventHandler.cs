@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using InventorySystem.Items.Firearms;
+using InventorySystem.Items.Firearms.Attachments;
 using LightContainmentZoneDecontamination;
 using MEC;
 using PlayerRoles;
@@ -21,7 +22,20 @@ namespace Events.TDM
     public class EventHandler
     {
         
-        public static List<string> checkpoints = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B"};
+        public static List<string> lockList = new List<string>{"CHECKPOINT_LCZ_A", "CHECKPOINT_LCZ_B", "LCZ_ARMORY", "LCZ_WC", "914", "330", "173_ARMORY", "173_CONNECTOR", "GR18"};
+
+        private static void SetupWeapon(Firearm firearm)
+        {
+            if (!AttachmentsServerHandler.PlayerPreferences.TryGetValue(firearm.Owner, out var value) || !value.TryGetValue(firearm.ItemTypeId, out uint attachments))
+                attachments = AttachmentsUtils.GetRandomAttachmentsCode(firearm.ItemTypeId);
+
+            FirearmStatusFlags firearmStatusFlags = FirearmStatusFlags.MagazineInserted;
+            if (firearm.HasAdvantageFlag(AttachmentDescriptiveAdvantages.Flashlight))
+                firearmStatusFlags |= FirearmStatusFlags.FlashlightEnabled;
+
+            firearm.ApplyAttachmentsCode(attachments, true);
+            firearm.Status = new FirearmStatus(firearm.AmmoManagerModule.MaxAmmo, firearmStatusFlags, firearm.GetCurrentAttachmentsCode());
+        }
 
         //on enable
         [PluginEvent(ServerEventType.RoundStart)]
@@ -34,7 +48,7 @@ namespace Events.TDM
             Server.FriendlyFire = false;
             
             //lock all checkpoint doors
-            foreach (var checkpoint in checkpoints)
+            foreach (var checkpoint in lockList)
             {
                 PluginAPI.Core.Server.RunCommand("/lock " + checkpoint);
             }
@@ -53,7 +67,7 @@ namespace Events.TDM
                     playerList[i].ClearInventory();
                     //give scientist a weapon and ammo (GunE11SR)
                     Firearm firearm = (Firearm)playerList[i].AddItem(ItemType.GunE11SR);
-                    //firearm.Status = new FirearmStatus(30, FirearmStatusFlags.MagazineInserted, );
+                    SetupWeapon(firearm);
                     playerList[i].SetAmmo(ItemType.Ammo556x45, 200);
                 }
                 else
@@ -61,9 +75,8 @@ namespace Events.TDM
                     playerList[i].Role = RoleTypeId.ClassD;
                     playerList[i].ClearInventory();
                     //give scientist a weapon and ammo (AK)
-                    playerList[i].AddItem(ItemType.GunAK);
-                    Firearm firearm = (Firearm)playerList[i].AddItem(ItemType.Ammo762x39);
-                    //firearm.Status = new FirearmStatus(30, FirearmStatusFlags.MagazineInserted, AttachmentParams);
+                    Firearm firearm = (Firearm)playerList[i].AddItem(ItemType.GunAK);
+                    SetupWeapon(firearm);
                     playerList[i].SetAmmo(ItemType.Ammo762x39, 200);
                 }
                 
@@ -78,18 +91,18 @@ namespace Events.TDM
         {
             if (attacker == null) return;
             if (player == null) return;
-            List<Player> player_list = Player.GetPlayers();
-            List<RoleTypeId> classd_roles = new List<RoleTypeId> {RoleTypeId.ClassD, RoleTypeId.Spectator, RoleTypeId.None, RoleTypeId.CustomRole, RoleTypeId.Overwatch, RoleTypeId.Tutorial};
-            List<RoleTypeId> scientist_roles = new List<RoleTypeId> {RoleTypeId.Scientist, RoleTypeId.Spectator, RoleTypeId.None, RoleTypeId.CustomRole, RoleTypeId.Overwatch, RoleTypeId.Tutorial};
+            List<Player> playerList = Player.GetPlayers();
+            List<RoleTypeId> classdRoles = new List<RoleTypeId> {RoleTypeId.ClassD, RoleTypeId.Spectator, RoleTypeId.None, RoleTypeId.CustomRole, RoleTypeId.Overwatch, RoleTypeId.Tutorial};
+            List<RoleTypeId> scientistRoles = new List<RoleTypeId> {RoleTypeId.Scientist, RoleTypeId.Spectator, RoleTypeId.None, RoleTypeId.CustomRole, RoleTypeId.Overwatch, RoleTypeId.Tutorial};
             //check if one team is dead
-            if (player_list.All(p => classd_roles.Contains(p.Role)))
+            if (playerList.All(p => classdRoles.Contains(p.Role)))
             {
                 Log.Info("classD win");
                 //scientists win
                 Server.SendBroadcast(string.Format(TDM.Singleton.EventConfig.WinText, "Class-D's"), 100,
                     Broadcast.BroadcastFlags.Normal, true);
             }
-            else if (player_list.All(p => scientist_roles.Contains(p.Role)))
+            else if (playerList.All(p => scientistRoles.Contains(p.Role)))
             {
                 Log.Info("scientist win");
                 //classD win
